@@ -54,8 +54,8 @@
         "setting" : {
             "urlCheck" : false,
             "es6" : false,
-			// 黄色警告
-			"checkSiteMap":false
+            // 黄色警告
+            "checkSiteMap" : false
         },
         "usingComponents" : true
     },
