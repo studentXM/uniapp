@@ -26,16 +26,15 @@
 				
 				<view class="floor-img-box">
 					<!-- 左侧大图 -->
-					<navigator class="left-img-box" :url="item.product_list[0].url">
+					<navigator class="left-img-box" :url="item.product_list[0].url" >
 						<image :src="item.product_list[0].image_src" class="left-big-img"></image>
-					</navigator>
+					</navigator> 
+					
 					<!-- 右侧图 -->
 					<view class="right-img-box">
-						<navigator 
-						class="right-img-Box" 
-						v-for="itemx in item.product_list.slice(1)" :url="itemx.url">
-							<image :src="itemx.image_src" class="right-img"></image>
-						</navigator>
+						<navigator class="right-img-Box" v-for="itemx in item.product_list.slice(1)" :url="itemx.url">
+							<image :src="itemx.image_src" class="right-img" ></image>
+						</navigator> 
 					</view>
 				</view>	
 			</view>
@@ -73,6 +72,7 @@
 				this.swiperList = res.message
 				// uni.$showMsg('请求成功')
 			},
+			// 头部图
 			async getNavList() {
 				const {
 					data: res
@@ -81,20 +81,22 @@
 				this.navList = res.message;
 				console.log(res)
 			},
+			// 楼层
 			async getFloorList() {
 				const {
 					data: res
 				} = await uni.$http.get('/api/public/v1/home/floordata')
 				if (res.meta.status !== 200) return uni.$showMsg()
 				console.log(res.message)
+
 				// 对数据进行处理
+				this.floorList = res.message;
 				res.message.forEach(floor => {
-					console.log(floor , 'xxxxxxx')
-					floor.product_list.forEach(prod=>{
-						prod.url = '/subpkg/goods_list/goods_list?'+prod.navigator_url.split('?')[1]
+					floor.product_list.forEach(prod =>{
+						prod.url = '/subpkg/goods_list/goods_list?' + prod.navigator_url.split('?')[1]
 					})
 				})
-				this.floorList = res.message
+
 			},
 
 
