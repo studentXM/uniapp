@@ -26,14 +26,16 @@
 				
 				<view class="floor-img-box">
 					<!-- 左侧大图 -->
-					<view class="left-img-box">
+					<navigator class="left-img-box" :url="item.product_list[0].url">
 						<image :src="item.product_list[0].image_src" class="left-big-img"></image>
-					</view>
+					</navigator>
 					<!-- 右侧图 -->
 					<view class="right-img-box">
-						<view class="right-img-Box" v-for="itemx in item.product_list.slice(1)">
+						<navigator 
+						class="right-img-Box" 
+						v-for="itemx in item.product_list.slice(1)" :url="itemx.url">
 							<image :src="itemx.image_src" class="right-img"></image>
-						</view>
+						</navigator>
 					</view>
 				</view>	
 			</view>
@@ -85,6 +87,13 @@
 				} = await uni.$http.get('/api/public/v1/home/floordata')
 				if (res.meta.status !== 200) return uni.$showMsg()
 				console.log(res.message)
+				// 对数据进行处理
+				res.message.forEach(floor => {
+					console.log(floor , 'xxxxxxx')
+					floor.product_list.forEach(prod=>{
+						prod.url = '/subpkg/goods_list/goods_list?'+prod.navigator_url.split('?')[1]
+					})
+				})
 				this.floorList = res.message
 			},
 
