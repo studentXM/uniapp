@@ -1,5 +1,7 @@
 <template>
 	<view>
+		<!-- 自定义搜索组件 -->
+		<my-search></my-search>
 		<view class="scroll-view-container">
 			<!-- 左侧滑动 -->
 			<scroll-view class="left-scroll-view" scroll-y="true" :style="{height:wh+'px'}">
@@ -34,6 +36,7 @@
 </template>
 
 <script>
+	import MySearch from '../../components/my-search/my-search.vue'
 	export default {
 		data() {
 			return {
@@ -51,6 +54,9 @@
 
 			this.getCateList()
 		},
+		components:{
+			MySearch
+		},
 		methods: {
 			// 获取分类列表
 			async getCateList() {
@@ -64,7 +70,7 @@
 			// 切换active值为当前点击元素的索引
 			activeChanged(i) {
 				this.active = i;
-				this.cateLevel2 = this.cateList[i].children;
+				this.cateLevel2 = this.cateList[i] .children;
 				// 重置顶部偏移值 选择0和1 是因为重复赋值一个值 会失效 所以在0-1之间取反
 				this.scrollTop = this.scrollTop === 0 ? 1 : 0;
 			}, 
@@ -73,7 +79,8 @@
 				uni.navigateTo({
 					url:'/subpkg/goods_detail/goods_detail?cid='+item.cat_id
 				})
-			}
+			},
+
 		}
 	}
 </script>

@@ -1,5 +1,10 @@
 <template>
 	<view>
+		<!-- 搜索组件 -->
+		<view class="search-box">
+			<my-search></my-search>
+		</view>
+		
 		<!-- 轮播图 -->
 		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
 			<swiper-item v-for="(item) in swiperList" :key="item.goods_id">
@@ -45,6 +50,7 @@
 </template>
 
 <script>
+	import MySearch from '../../components/my-search/my-search.vue'
 	export default {
 		data() {
 			return {
@@ -55,6 +61,9 @@
 				// 楼层的数据
 				floorList: [],
 			}
+		},
+		components:{
+			MySearch
 		},
 		onLoad() {
 			//获取轮播图
@@ -113,6 +122,11 @@
 </script>
 
 <style lang="scss">
+	.search-box{
+		position: sticky;
+		top: 0;
+		z-index: 99;
+	}
 	swiper {
 		height: 330rpx;
 
