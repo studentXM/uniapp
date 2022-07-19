@@ -44,7 +44,7 @@
 </script>
 
 <style lang="css">
-	@import url("../../static/css/iconfont.css");
+	
 	.my-search-container{
 		height: 50px;
 		/* background: #c00000; */

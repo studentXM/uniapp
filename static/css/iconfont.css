@@ -13,6 +13,26 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.uni-iconshouye:before {
+  content: "\e751";
+}
+
+.uni-icongouwuche:before {
+  content: "\e63f";
+}
+
+.uni-iconkefu:before {
+  content: "\e625";
+}
+
+.uni-iconshoucang_shixin:before {
+  content: "\eca6";
+}
+
+.uni-iconshoucang:before {
+  content: "\eca7";
+}
+
 .uni-iconshanchu1:before {
   content: "\e603";
 }
