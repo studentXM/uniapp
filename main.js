@@ -2,7 +2,7 @@ import App from './App'
 
 // #ifndef VUE3
 import Vue from 'vue'
-
+import store from '@/store/store.js'
 // 分别暴露是为了按需倒入
 import { $http } from '@escook/request-miniprogram'
 // 挂载到全局对象上
@@ -36,7 +36,8 @@ $http.afterRequest = function(){
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({
-    ...App
+    ...App,
+	store
 })
 app.$mount()
 // #endif
@@ -46,7 +47,8 @@ import { createSSRApp } from 'vue'
 export function createApp() {
   const app = createSSRApp(App)
   return {
-    app
+    app,
+
   }
 }
 // #endif

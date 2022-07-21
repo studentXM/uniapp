@@ -8,13 +8,13 @@
 			   <view class="iconfont" :class="item.icon"></view>
 			   <view v-if="item.icon == 'uni-icongouwuche'" 
 			   class="border-num">
-					{{item.info}}
+					{{total}}
 			   </view>
 			    <text>{{item.text}}</text>
 			</view>
 		</view>	
 	
-	    <view class="bar_item1" style="background-color: #FC8A05;">
+	    <view class="bar_item1" @click="addCart" style="background-color: #FC8A05;">
 	        <text>加入购物车</text>
 	    </view>
 	
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+	// vuex 辅助
+	import {mapState,mapMutations,mapGetters} from 'vuex'
 	export default {
 		name:"my-bar",
 		props:{
@@ -33,21 +35,67 @@
 				type:Array,
 				default:[]
 			},
+			goods_info:{
+				type:Object,
+				default:{}
+			}
+			
 		},
-		data() {
+		data() { 
 			return {
 				Cname:'iconfont'
 			};
 		},
+		computed:{
+			...mapState('m_cart',['cart']),
+			...mapGetters('m_cart',['total'])
+		},
+		watch:{
+			// 简写方式 可能会bug 比如第一次 不显示
+			// total(newVal){
+			// 	const findResult = this.options.find((x) => x.test === '购物车')
+			// 	if(findResult){
+			// 		findResult.info = newVal
+			// 	}
+			// }
+			
+			total:{
+				handler(newVal){
+						const findResult = this.options.find((x) => x.test === '购物车')
+						if(findResult){
+							findResult.info = newVal
+						}
+				},
+				immediate:true,
+			}
+			
+		},
 		methods:{
 			activesomething(e){
-				console.log(e)
+				// console.log(e)
 				if(e==='购物车'){
 					uni.switchTab({
 						url:'/pages/cart/cart'
 					})
 				}
-			}
+			},
+			addCart(){
+				// console.log(this.goods_info)
+				const goods = {
+					goods_id:this.goods_info.goods_id,
+					goods_name:this.goods_info.goods_name,
+					goods_price:this.goods_info.goods_price,
+					goods_count:1,
+					goods_small_logo:this.goods_info.goods_small_logo,
+					goods_state:true
+				}
+				// // 调用方法
+				this.addToCart(goods)
+				console.log(this.cart)
+			},
+			// vuex
+			...mapMutations('m_cart',['addToCart'])
+			
 		}
 		
 	}

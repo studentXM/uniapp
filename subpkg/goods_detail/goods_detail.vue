@@ -33,6 +33,7 @@
 			<view class="goods_nav">
 				<my-bar 
 				:options="options"
+				:goods_info="goods_info"
 				>
 					
 				</my-bar>
@@ -43,7 +44,10 @@
 </template>
 
 <script>
+	// 商品底部导航组件
 	import MyBar from '@/components/my-bar/my-bar.vue';
+	// vuex 辅助
+	import {mapState} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -79,6 +83,10 @@
 				]
 			};
 		},
+		
+		computed:{
+			...mapState('m_cart',['cart'])
+		},
 		components:{
 			MyBar
 		},
@@ -91,6 +99,7 @@
 		methods: {
 			// 定义请求商品数据的方式
 			async getGoodsDetail(goods_id) {
+	
 				const {
 					data: res
 				} = await uni.$http.get('/api/public/v1/goods/detail', {
@@ -114,15 +123,8 @@
 					urls: this.goods_info.pics.map(x => x.pics_big)
 				})
 			},
-			//
-			 onClick(e){
-				 console.log(e)
-				 if(e.content.text === '购物车'){
-					 uni.switchTab({
-						 url:'/pages/cat/cart'
-					 })
-				 }
-			 }
+
+
 		}
 	}
 </script>

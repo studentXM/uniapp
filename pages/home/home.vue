@@ -51,7 +51,10 @@
 
 <script>
 	import MySearch from '../../components/my-search/my-search.vue'
+	import badgeMix from '@/mixins/tabbar-badge.js'
+	
 	export default {
+		mixins:[badgeMix],
 		data() {
 			return {
 				// 轮博图
