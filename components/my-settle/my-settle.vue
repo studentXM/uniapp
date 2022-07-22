@@ -11,7 +11,9 @@
 		</view>
 		
 		<!-- 结算按钮 -->
-		<view class="btn-settle">结算({{checkedCount}})
+		<view class="btn-settle"
+		@click="settlement">结算({{checkedCount}})
+		
 		</view>
 		
 	</view>
@@ -27,10 +29,24 @@
 			};
 		},
 		methods:{
-			...mapMutations('m_cart',['updateAllGoodsState'])
+			...mapMutations('m_cart',['updateAllGoodsState']),
+			// 点击结算按钮
+			settlement(){
+				// 先判断是否勾选了要结算的商品
+				// 这个计算属性不要调用() 直接写就可以了
+				if(!this.checkedCount) return uni.$showMsg('请勾选商品')
+				
+				// 再判断用户是否选择了收货地址
+				if(!this.addstr) return uni.showMsg('请选择收货地址!')
+				
+				// 最后判断是否登陆
+				if(!this.token) return uni.$showMsg('请先登陆!')
+			}
 		},
 		computed:{
 			...mapGetters('m_cart',['checkedCount','total','checkedGoodsAmount']),
+			// 详细地址
+			...mapGetters('m_user',['addstr']),
 			// 是否全选
 			isGullCheck(){
 				return this.total === this.checkedCount
